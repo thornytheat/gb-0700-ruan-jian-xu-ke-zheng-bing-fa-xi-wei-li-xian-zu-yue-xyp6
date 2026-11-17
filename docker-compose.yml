@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    ports:
+      - "18214:8000"
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - app-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+volumes:
+  app-data:
